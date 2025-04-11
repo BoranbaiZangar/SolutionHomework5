@@ -18,4 +18,9 @@ public class ProxyImage implements Image {
         }
         realImage.displayFullImage();
     }
+
+    @Override
+    public String getFileName() {
+        return null;
+    }
 }
