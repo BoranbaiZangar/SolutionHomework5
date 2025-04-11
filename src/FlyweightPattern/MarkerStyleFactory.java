@@ -1,18 +1,19 @@
 package FlyweightPattern;
+
 import java.util.*;
+
 public final class MarkerStyleFactory {
-    private static final Map<String, MarkerStyle> styles = new HashMap<>();
+    private static final Map<MarkerStyle, MarkerStyle> styles = new HashMap<>();
     private static int styleRequests = 0;
 
     private MarkerStyleFactory() {}
 
     public static MarkerStyle getStyle(String icon, String color, String labelStyle) {
         styleRequests++;
-        String key = String.join("|", icon, color, labelStyle);
+        MarkerStyle key = new MarkerStyle(icon, color, labelStyle);
         return styles.computeIfAbsent(key, k -> {
-            MarkerStyle style = new MarkerStyle(icon, color, labelStyle);
-            System.out.println("Creating new style: " + style);
-            return style;
+            System.out.println("Creating new style: " + k);
+            return k;
         });
     }
 
@@ -22,5 +23,14 @@ public final class MarkerStyleFactory {
 
     public static int countTotalRequests() {
         return styleRequests;
+    }
+
+    public static void clearCache() {
+        styles.clear();
+        styleRequests = 0;
+    }
+
+    public static Collection<MarkerStyle> getAllStyles() {
+        return Collections.unmodifiableCollection(styles.values());
     }
 }

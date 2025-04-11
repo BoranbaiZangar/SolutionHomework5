@@ -14,4 +14,8 @@ public class MapMarker {
     public void display() {
         System.out.println("Marker at (" + latitude + ", " + longitude + ") with " + style);
     }
+
+    public MarkerStyle getStyle() {
+        return style;
+    }
 }
